@@ -2,7 +2,7 @@
 
 A bash script for managing WireGuard peers on NixOS systems with automatic IP allocation, key management, and QR code generation for mobile devices. Use this script on the NixOS wireguard server to generate and manage client configs.
 
-All the fiddly stuff which should be easy, and is, if you are used to using things like [PiVPN](https://github.com/pivpn/pivpn) and [wg-easy](https://github.com/wg-easy/wg-easy). This combines the ease of those tools on the NixOS platform, and in a way that allows the system to be reproducable as it simply edits a separate client nix module, linked to a server nix module.
+All the fiddly stuff which should be easy, and is, if you are used to using things like [PiVPN](https://github.com/pivpn/pivpn) and [wg-easy](https://github.com/wg-easy/wg-easy). This combines the ease of those tools on the NixOS platform, and in a way that allows the system to be reproducable as the script simply edits a separate client nix module, imported into the server nix module.
 
 ## Features
 
@@ -17,7 +17,6 @@ All the fiddly stuff which should be easy, and is, if you are used to using thin
 
 ## Prerequisites
 
-- NixOS system with WireGuard module configured
 - `qrencode` package installed (for QR code generation)
 - `wireguard-tools` package installed
 - Proper sudo permissions for key management
@@ -52,7 +51,7 @@ sudo chmod 600 /etc/nixos/secrets/wg-private && \
 sudo chown root:root /etc/nixos/secrets/wg-private
 ```
 
-It also assumes the wireguard.nix module from the repo is in the /etc/nixos/modules directory. You can copy it and the wg-peers.nix template there and modify any of the default variables if you wish:
+It also assumes the wireguard.nix module from the repo is in the /etc/nixos/modules directory. You can copy it and the wg-peers.nix template there and modify any of the default variables if you wish (see Configuration below):
 ```bash
 sudo mkdir -p /etc/nixos/modules && \
 sudo cp ./modules/* /etc/nixos/modules/
@@ -131,7 +130,7 @@ specify endpoint IP
 The script uses these default paths and settings, but you can change these if you like by editing the variables at the top of the wireguard.nix file:
 - **WireGuard Directory**: `~/wg/`
 - **Interface**: `wg0`
-- **External interface** (for NAT forwarding): `eth0`
+- **External Interface** (for NAT forwarding): `eth0`
 - **Server IP**: `10.100.0.1`
 - **Network Range**: `10.100.0.0/24`
 - **Port**: `51820`
@@ -145,7 +144,7 @@ After adding/removing peers, apply changes with:
 sudo nixos-rebuild switch
 ```
 
-The script generates a `wg-peers.nix` file in the /etc/nixos/modules/ directory, and is imported into the wireguard.nix configuration.
+The script generates a `wg-peers.nix` file in the /etc/nixos/modules/ directory, and this is imported into the wireguard.nix configuration.
 
 ## Security Features
 
@@ -172,9 +171,9 @@ GNU GENERAL PUBLIC LICENSE Version 3 - see LICENSE file for details.
 
 ### Common Issues
 
-**qrencode not found**: Install with `nix-env -iA nixpkgs.qrencode` or add to system packages
+**qrencode not found**: Install with `nix-env -iA nixpkgs.qrencode` or add to system packages.
 
-**Permission denied on secrets**: Ensure you have sudo access and the secrets directory exists
+**Permission denied on secrets**: Ensure you have sudo access and the secrets directory exists.
 
 **IP conflicts**: The script automatically detects and avoids IP conflicts. Use `list` command to see current allocations.
 
