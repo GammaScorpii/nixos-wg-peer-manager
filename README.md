@@ -1,17 +1,19 @@
 # WireGuard Peer Manager for NixOS
 
-A comprehensive bash script for managing WireGuard peers on NixOS systems with automatic IP allocation, key management, and QR code generation for mobile devices.
+A bash script for managing WireGuard peers on NixOS systems with automatic IP allocation, key management, and QR code generation for mobile devices. Use this script on the NixOS wireguard server to generate and manage client configs.
+
+All the fiddly stuff which should be easy, and is, if you are used to using things like [PiVPN](https://github.com/pivpn/pivpn) and [wg-easy](https://github.com/wg-easy/wg-easy). This combines the ease of those tools on the NixOS platform, and in a way that allows the system to be reproducable as it simply edits a separate client nix module, linked to a server nix module.
 
 ## Features
 
 - **Automatic IP Management**: Intelligent IP allocation within your WireGuard network range
+- **Secure Key Creation**: Creates the private and public keys required for the clients
 - **Secure Key Storage**: Organized key management in `/etc/nixos/secrets/`
 - **NixOS Integration**: Generates NixOS-compatible peer configurations
 - **Mobile-Friendly**: QR code generation for easy mobile client setup
-- **Safety First**: Built-in checks to prevent running as root and data corruption
 - **Multiple IP Detection**: Auto-detects server public IP using multiple methods
 - **Cleanup Tools**: Remove peers and clean orphaned files
-- **Terminal QR Codes**: ASCII QR codes displayed directly in terminal
+- **Terminal QR Codes**: QR codes displayed directly in terminal
 
 ## Prerequisites
 
@@ -43,6 +45,14 @@ environment.systemPackages = with pkgs; [
 ```
 
 ## Usage
+
+After add or remove of peers, running:
+
+```
+sudo nixos-rebuild switch
+```
+
+will apply the changes to the system, and peers will then be able to connect.
 
 ### Add a new peer
 ```bash
@@ -83,9 +93,10 @@ environment.systemPackages = with pkgs; [
 
 ## Configuration
 
-The script uses these default paths and settings:
+The script uses these default paths and settings, but you can change these if you like by editing the variables at the top of the wireguard.nix file:
 - **WireGuard Directory**: `~/wg/`
 - **Interface**: `wg0`
+- **External interface** (for NAT forwarding): `eth0`
 - **Server IP**: `10.100.0.1`
 - **Network Range**: `10.100.0.0/24`
 - **Port**: `51820`
@@ -121,7 +132,7 @@ Pull requests welcome! Please ensure your code follows the existing style and in
 
 ## License
 
-MIT License - see LICENSE file for details.
+GNU GENERAL PUBLIC LICENSE Version 3 - see LICENSE file for details.
 
 ## Troubleshooting
 
@@ -133,6 +144,6 @@ MIT License - see LICENSE file for details.
 
 **IP conflicts**: The script automatically detects and avoids IP conflicts. Use `list` command to see current allocations.
 
-**Server endpoint detection fails**: Manually specify server IP when adding peers: `./wg-peer-manager.sh add peer "" your-server-ip`
+**Server endpoint detection fails**: Manually specify server IP when adding peers and ensure port number is correct and accessible.
 
 ---
