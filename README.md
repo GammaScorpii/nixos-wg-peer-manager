@@ -15,6 +15,15 @@ All the fiddly stuff which should be easy, and is, if you are used to using thin
 - **Cleanup Tools**: Remove peers and clean orphaned files
 - **Terminal QR Codes**: QR codes displayed directly in terminal
 
+## NixOS Integration
+
+After adding/removing peers, apply changes with:
+```bash
+sudo nixos-rebuild switch
+```
+
+The script generates a `wg-peers.nix` file in the /etc/nixos/modules/ directory, and this is imported into the wireguard.nix configuration.
+
 ## Prerequisites
 
 - `qrencode` package installed (for QR code generation)
@@ -43,7 +52,7 @@ git clone https://github.com/GammaScorpii/nixos-wg-peer-manager.git && \
 cd nixos-wg-peer-manager
 ```
 
-3. The script assumes you have /etc/nixos/secrets/wg-private file already set up as the servers private key. It needs to exist or be be made yourself (for now):
+3. The script assumes you have /etc/nixos/secrets/wg-private file already set up as the server private key. It needs to exist or be be made yourself (for now):
 ```bash
 sudo mkdir -p /etc/nixos/secrets && \
 wg genkey | sudo tee /etc/nixos/secrets/wg-private && \
@@ -82,15 +91,15 @@ sudo nixos-rebuild switch
 
 will apply the changes to the system, and peers will then be able to connect.
 
-### Add a new peer
+### Add a new peer, following prompts:
 ```bash
 ./wg-peer-manager.sh add alice-laptop
 ```
-specify client IP
+Or specify client IP from the start (wireguard network IP):
 ```
 ./wg-peer-manager.sh add alice-laptop 10.100.0.10
 ```
-specify endpoint IP
+Or specify endpoint IP from the start (how clients find the server):
 ```
 ./wg-peer-manager.sh add alice-laptop "" 192.168.1.100
 ```
@@ -136,15 +145,6 @@ The script uses these default paths and settings, but you can change these if yo
 - **Port**: `51820`
 - **Secrets Directory**: `/etc/nixos/secrets/wg-clients/`
 - **Peers Configuration**: `/etc/nixos/modules/wg-peers.nix`
-
-## NixOS Integration
-
-After adding/removing peers, apply changes with:
-```bash
-sudo nixos-rebuild switch
-```
-
-The script generates a `wg-peers.nix` file in the /etc/nixos/modules/ directory, and this is imported into the wireguard.nix configuration.
 
 ## Security Features
 
