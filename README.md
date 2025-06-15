@@ -6,14 +6,14 @@ All the fiddly stuff which should be easy, and is, if you are used to using thin
 
 ## Features
 
-- **Automatic IP Management**: Intelligent IP allocation within your WireGuard network range
-- **Secure Key Creation**: Creates the private and public keys required for the clients
-- **Secure Key Storage**: Organized key management in `/etc/nixos/secrets/`
-- **NixOS Integration**: Generates NixOS-compatible peer configurations
-- **Mobile-Friendly**: QR code generation for easy mobile client setup
-- **Multiple IP Detection**: Auto-detects server public IP using multiple methods
-- **Cleanup Tools**: Remove peers and clean orphaned files
-- **Terminal QR Codes**: QR codes displayed directly in terminal
+- **Automatic IP Management**: Intelligent IP allocation within your WireGuard network range.
+- **Secure Key Creation**: Creates the private and public keys required for the clients and drops a ready to use .conf in the ~/wg directory.
+- **Terminal QR Codes**: QR codes displayed directly in terminal, shown after generation or on any existing config with the 'qr' command.
+- **Secure Key Storage**: Organized key management in `/etc/nixos/secrets/`.
+- **NixOS Integration**: Generates NixOS-compatible peer configurations.
+- **Mobile-Friendly**: QR code generation for easy mobile client setup.
+- **Multiple IP Detection**: Auto-detects server public IP using multiple methods.
+- **Cleanup Tools**: Remove peers and clean orphaned files.
 
 ## NixOS Integration
 
@@ -26,9 +26,10 @@ The script generates a `wg-peers.nix` file in the /etc/nixos/modules/ directory,
 
 ## Prerequisites
 
-- `qrencode` package installed (for QR code generation)
 - `wireguard-tools` package installed
+- `qrencode` package installed (for QR code generation)
 - Proper sudo permissions for key management
+- Import of wireguard.nix into your main configuration.nix
 
 ## Installation
 
@@ -157,7 +158,8 @@ The script uses these default paths and settings, but you can change these if yo
 
 1. Add a peer: `./wg-peer-manager.sh add my-phone`
 2. Scan the QR code displayed in terminal with WireGuard mobile app
-3. Connection ready!
+3. Rebuild the server: `sudo nixos-rebuild switch`
+4. Connection ready!
 
 ## Contributing
 
