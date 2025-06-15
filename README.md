@@ -24,7 +24,7 @@ A comprehensive bash script for managing WireGuard peers on NixOS systems with a
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/yourusername/nixos-wg-peer-manager.git
+git clone https://github.com/GammaScorpii/nixos-wg-peer-manager.git
 cd nixos-wg-peer-manager
 ```
 
