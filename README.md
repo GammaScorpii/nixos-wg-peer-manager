@@ -24,29 +24,53 @@ All the fiddly stuff which should be easy, and is, if you are used to using thin
 
 ## Installation
 
-1. Clone this repository:
+1. Install required dependencies (add to your NixOS configuration.nix):
 ```bash
-git clone https://github.com/GammaScorpii/nixos-wg-peer-manager.git
-cd nixos-wg-peer-manager
-```
-
-2. Make the script executable:
-```bash
-chmod +x wg-peer-manager.sh
-```
-
-3. Install required dependencies:
-```bash
-# Add to your NixOS configuration.nix
 environment.systemPackages = with pkgs; [
   wireguard-tools
   qrencode
 ];
 ```
 
+2. Clone this repository:
+```bash
+cd ~ \
+git clone https://github.com/GammaScorpii/nixos-wg-peer-manager.git \
+cd nixos-wg-peer-manager
+```
+
+3. The script assumes you have /etc/nixos/secrets/wg-private file already set up as the servers private key. It needs to exist or be be made yourself (for now):
+```bash
+sudo mkdir -p /etc/nixos/secrets \
+wg genkey | sudo tee /etc/nixos/secrets/wg-private \
+sudo chmod 600 /etc/nixos/secrets/wg-private \
+sudo chown root:root /etc/nixos/secrets/wg-private
+```
+
+It also assumes the wireguard.nix module from the repo is in the /etc/nixos/modules directory. You can copy it and the wg-peers.nix template there and modify any of the default variables if you wish:
+```bash
+sudo mkdir -p /etc/nixos/modules \
+sudo cp ./modules/* /etc/nixos/modules/
+```
+
+And finally import wireguard.nix to your /etc/nixos/configuration.nix:
+```bash
+  imports =
+    [ # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+      ./modules/wireguard.nix
+    ];
+```
+
+4. Make the script executable:
+```bash
+chmod +x wg-peer-manager.sh
+```
+
+
 ## Usage
 
-After add or remove of peers, running:
+Note: after add or remove of peers, running:
 
 ```
 sudo nixos-rebuild switch
