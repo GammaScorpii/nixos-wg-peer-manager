@@ -56,14 +56,20 @@ will apply the changes to the system, and peers will then be able to connect.
 
 ### Add a new peer
 ```bash
-./wg-peer-manager.sh add john-laptop
-./wg-peer-manager.sh add mary-phone 10.100.0.10
-./wg-peer-manager.sh add bob-tablet "" 192.168.1.100
+./wg-peer-manager.sh add alice-laptop
+```
+specify client IP
+```
+./wg-peer-manager.sh add alice-laptop 10.100.0.10
+```
+specify endpoint IP
+```
+./wg-peer-manager.sh add alice-laptop "" 192.168.1.100
 ```
 
 ### Remove a peer
 ```bash
-./wg-peer-manager.sh remove john-laptop
+./wg-peer-manager.sh remove alice-laptop
 ```
 
 ### List all peers
@@ -73,12 +79,12 @@ will apply the changes to the system, and peers will then be able to connect.
 
 ### Show peer details
 ```bash
-./wg-peer-manager.sh show john-laptop
+./wg-peer-manager.sh show alice-laptop
 ```
 
 ### Display QR code for mobile import
 ```bash
-./wg-peer-manager.sh qr john-laptop
+./wg-peer-manager.sh qr alice-laptop
 ```
 
 ### Manage server endpoint
@@ -144,6 +150,10 @@ GNU GENERAL PUBLIC LICENSE Version 3 - see LICENSE file for details.
 
 **IP conflicts**: The script automatically detects and avoids IP conflicts. Use `list` command to see current allocations.
 
-**Server endpoint detection fails**: Manually specify server IP when adding peers and ensure port number is correct and accessible.
+**Server endpoint detection fails**: Manually specify server IP when adding peers and ensure port number is correct and accessible. It can be a domain, or local IP.
+
+```
+./wg-peer-manager.sh add alice-tablet "" endpointIP
+```
 
 ---
