@@ -769,7 +769,7 @@ main() {
             ;;
         *)
             echo "WireGuard Peer Manager"
-            echo "Usage: $0 {add|remove|list|show|clean|endpoint} [arguments]"
+            echo "Usage: $0 {add|remove|list|show|clean|endpoint|qr} [arguments]"
             echo ""
             echo "Commands:"
             echo "  add <name> [ip] [server-ip]  Add a new peer (IP auto-assigned if not specified)"
