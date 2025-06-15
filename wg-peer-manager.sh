@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # WireGuard Peer Management Script for NixOS
-# Usage: ./wg-peer-manager.sh [add|remove|list|show|clean|endpoint] [peer-name] [optional-ip]
+# Usage: ./wg-peer-manager.sh [add|remove|list|show|clean|endpoint|qr] [peer-name] [optional-ip]
 
 set -euo pipefail
 
@@ -781,15 +781,15 @@ main() {
             echo "  qr <name>                    Show QR code for peer config"
             echo ""
             echo "Examples:"
-            echo "  $0 add john-laptop"
+            echo "  $0 add alice-laptop"
             echo "  $0 add mary-phone 10.100.0.10"
             echo "  $0 add bob-tablet \"\" 192.168.1.100"
-            echo "  $0 remove john-laptop"
+            echo "  $0 remove alice-laptop"
             echo "  $0 list"
-            echo "  $0 show john-laptop"
-            echo "  $0 clean john-laptop"
+            echo "  $0 show alice-laptop"
+            echo "  $0 clean alice-laptop"
             echo "  $0 endpoint"
-            echo "  $0 qr john-laptop"
+            echo "  $0 qr alice-laptop"
             exit 1
             ;;
     esac
