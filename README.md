@@ -145,12 +145,11 @@ After adding/removing peers, apply changes with:
 sudo nixos-rebuild switch
 ```
 
-The script generates a `wg-peers.nix` file that can be imported into your NixOS WireGuard configuration.
+The script generates a `wg-peers.nix` file in the /etc/nixos/modules/ directory, and is imported into the wireguard.nix configuration.
 
 ## Security Features
 
 - Keys stored in protected `/etc/nixos/secrets/` directory
-- Prevents execution as root user
 - Secure file permissions (600 for keys, 750 for directories)
 - IP address validation and conflict detection
 - Safe temporary file handling
