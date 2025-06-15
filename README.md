@@ -6,13 +6,12 @@ All the fiddly stuff which should be easy, and is, if you are used to using thin
 
 ## Features
 
-- **Automatic IP Management**: Intelligent IP allocation within your WireGuard network range.
+- **NixOS Integration**: Generates NixOS-compatible peer configurations for reproducability. Script edits a single peer specific .nix file.
 - **Secure Key Creation**: Creates the private and public keys required for the clients and drops a ready to use .conf in the ~/wg directory.
-- **Terminal QR Codes**: QR codes displayed directly in terminal, shown after generation or on any existing config with the 'qr' command.
+- **Terminal QR Codes**: QR codes displayed directly in terminal, shown after generation or on any existing config with the 'qr' command for easy mobile client setup.
+- **Automatic IP Management**: Intelligent IP allocation within your WireGuard network range.
 - **Secure Key Storage**: Organized key management in `/etc/nixos/secrets/`.
-- **NixOS Integration**: Generates NixOS-compatible peer configurations.
-- **Mobile-Friendly**: QR code generation for easy mobile client setup.
-- **Multiple IP Detection**: Auto-detects server public IP using multiple methods.
+- **Multiple IP Detection**: Auto-detects public IP for endpoint IP suggestion.
 - **Cleanup Tools**: Remove peers and clean orphaned files.
 
 ## NixOS Integration
