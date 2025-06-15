@@ -19,7 +19,7 @@ All the fiddly stuff which should be easy, and is, if you are used to using thin
 
 - NixOS system with WireGuard module configured
 - `qrencode` package installed (for QR code generation)
-- `wg` (WireGuard tools) installed
+- `wireguard-tools` package installed
 - Proper sudo permissions for key management
 
 ## Installation
@@ -27,29 +27,34 @@ All the fiddly stuff which should be easy, and is, if you are used to using thin
 1. Install required dependencies (add to your NixOS configuration.nix):
 ```bash
 environment.systemPackages = with pkgs; [
+  git
   wireguard-tools
   qrencode
 ];
 ```
+Rebuild:
+```
+sudo nixos-rebuild switch
+```
 
 2. Clone this repository:
 ```bash
-cd ~ \
-git clone https://github.com/GammaScorpii/nixos-wg-peer-manager.git \
+cd ~ && \
+git clone https://github.com/GammaScorpii/nixos-wg-peer-manager.git && \
 cd nixos-wg-peer-manager
 ```
 
 3. The script assumes you have /etc/nixos/secrets/wg-private file already set up as the servers private key. It needs to exist or be be made yourself (for now):
 ```bash
-sudo mkdir -p /etc/nixos/secrets \
-wg genkey | sudo tee /etc/nixos/secrets/wg-private \
-sudo chmod 600 /etc/nixos/secrets/wg-private \
+sudo mkdir -p /etc/nixos/secrets && \
+wg genkey | sudo tee /etc/nixos/secrets/wg-private && \
+sudo chmod 600 /etc/nixos/secrets/wg-private && \
 sudo chown root:root /etc/nixos/secrets/wg-private
 ```
 
 It also assumes the wireguard.nix module from the repo is in the /etc/nixos/modules directory. You can copy it and the wg-peers.nix template there and modify any of the default variables if you wish:
 ```bash
-sudo mkdir -p /etc/nixos/modules \
+sudo mkdir -p /etc/nixos/modules && \
 sudo cp ./modules/* /etc/nixos/modules/
 ```
 
