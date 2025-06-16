@@ -148,12 +148,20 @@ The script uses these default paths and settings, but you can change these if yo
 - **Secrets Directory**: `/etc/nixos/secrets/wg-clients/`
 - **Peers Configuration**: `/etc/nixos/modules/wg-peers.nix`
 
-## Security Features
+## Security Notes
 
 - Keys stored in protected `/etc/nixos/secrets/` directory
 - Secure file permissions (600 for keys, 750 for directories)
 - IP address validation and conflict detection
 - Safe temporary file handling
+- Provided wireguard.nix disables checkReversePath on firewall - recommend you research the implications as it could be undesirable for your situation!
+```
+networking.firewall = {
+    allowedUDPPorts = [ wgPort ];
+    # Optional
+    checkReversePath = false;
+  };
+```
 
 ## Mobile Setup
 
@@ -174,7 +182,7 @@ GNU GENERAL PUBLIC LICENSE Version 3 - see LICENSE file for details.
 
 ### Common Issues
 
-**qrencode not found**: Install with `nix-env -iA nixpkgs.qrencode` or add to system packages.
+**qrencode not found**: Install with `nix-shell -p qrencode` or add to system packages.
 
 **Permission denied on secrets**: Ensure you have sudo access and the secrets directory exists.
 
