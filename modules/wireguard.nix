@@ -23,7 +23,7 @@ in
   
   networking.firewall = {
     allowedUDPPorts = [ wgPort ];
-    # Optional: Allow forwarding for better performance
+    # Optional
     checkReversePath = false;
   };
   
