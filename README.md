@@ -11,7 +11,7 @@ All the fiddly stuff which should be easy, and is, if you are used to using thin
 - **Terminal QR Codes**: QR codes displayed directly in terminal, shown after generation or on any existing config with the 'qr' command for easy mobile client setup.
 - **Automatic IP Management**: Intelligent IP allocation within your WireGuard network range.
 - **Secure Key Storage**: Organized key management in `/etc/nixos/secrets/`.
-- **Multiple IP Detection**: Auto-detects public IP for endpoint IP suggestion.
+- **Public IP Detection**: Auto-detects public IP for endpoint IP suggestion, but you can use a domain or LAN IP.
 - **Cleanup Tools**: Remove peers and clean orphaned files.
 
 ## NixOS Integration
@@ -80,7 +80,6 @@ And finally import wireguard.nix to your /etc/nixos/configuration.nix:
 chmod +x wg-peer-manager.sh
 ```
 
-
 ## Usage
 
 Note: after add or remove of peers, running:
@@ -91,7 +90,9 @@ sudo nixos-rebuild switch
 
 will apply the changes to the system, and peers will then be able to connect.
 
-### Add a new peer, following prompts:
+### Add a new peer
+
+Following prompts:
 ```bash
 ./wg-peer-manager.sh add alice-laptop
 ```
@@ -102,11 +103,6 @@ Or specify client IP from the start (wireguard network IP):
 Or specify endpoint IP from the start (how clients find the server):
 ```
 ./wg-peer-manager.sh add alice-laptop "" 192.168.1.100
-```
-
-### Remove a peer
-```bash
-./wg-peer-manager.sh remove alice-laptop
 ```
 
 ### List all peers
@@ -130,8 +126,14 @@ Or specify endpoint IP from the start (how clients find the server):
 ```
 
 ### Clean orphaned files
+(also removes the peer, probably better to use this than the remove function below until I confirm 'remove' is redundant)
 ```bash
-./wg-peer-manager.sh clean john-laptop
+./wg-peer-manager.sh clean alice-laptop
+```
+
+### Remove a peer
+```bash
+./wg-peer-manager.sh remove alice-laptop
 ```
 
 ## Configuration
